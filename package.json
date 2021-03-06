@@ -1,0 +1,22 @@
+{
+  "name": "chat-app",
+  "version": "1.0.0",
+  "description": "A messenger (chat) web-application using websockets made for the Data Transmission laboratory",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ImGelu/td-project.git"
+  },
+  "author": "Muntean Tiberiu, Szenasi Peter, Tugui Vlad, Ungur Gelu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ImGelu/td-project/issues"
+  },
+  "homepage": "https://github.com/ImGelu/td-project#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
