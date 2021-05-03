@@ -65,8 +65,8 @@ a {
 }
 
 .chat-main {
-    display: grid;
-    grid-template-columns: 1fr 5fr;
+    display: flex;
+    flex-grow: 1;
     flex: 1;
 }
 
@@ -75,6 +75,7 @@ a {
     color: #fff;
     padding: 20px 20px 60px;
     overflow-y: scroll;
+    flex-grow: 1;
 }
 
 .chat-sidebar h2 {
@@ -96,6 +97,7 @@ a {
     padding: 30px;
     max-height: 500px;
     overflow-y: scroll;
+    flex-grow: 5;
 }
 
 .chat-messages .message {
