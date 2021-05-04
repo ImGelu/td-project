@@ -36,13 +36,8 @@ a {
     text-decoration: none;
 }
 
-.btn {
-    cursor: pointer;
-    padding: 5px 15px;
-    background: var(--light-color);
-    color: var(--dark-color-a);
-    border: 0;
-    font-size: 17px;
+p, h3 {
+    margin: 0;
 }
 
 /* Chat Page */
@@ -66,15 +61,16 @@ a {
 
 .chat-main {
     display: flex;
-    flex-grow: 1;
-    flex: 1;
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0px;
 }
 
 .chat-sidebar {
     background: var(--dark-color-b);
     color: #fff;
     padding: 20px 20px 60px;
-    overflow-y: scroll;
+    overflow-y: auto;
     flex-grow: 1;
 }
 
@@ -95,8 +91,10 @@ a {
 
 .chat-messages {
     padding: 30px;
-    max-height: 500px;
-    overflow-y: scroll;
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0px;
+    overflow-y: auto;
     flex-grow: 5;
 }
 
@@ -136,15 +134,27 @@ a {
     outline: none;
 }
 
-/* Join Page */
+/* Login Page */
 
-.join-container {
-    max-width: 500px;
-    margin: 80px auto;
+.login-container {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #fff;
 }
 
-.join-header {
+.login-box {
+    min-width: 400px;
+}
+
+.login-header {
     text-align: center;
     padding: 20px;
     background: var(--dark-color-a);
@@ -152,48 +162,48 @@ a {
     border-top-right-radius: 5px;
 }
 
-.join-main {
+.login-main {
     padding: 30px 40px;
     background: var(--dark-color-b);
 }
 
-.join-main p {
+.login-main p {
     margin-bottom: 20px;
 }
 
-.join-main .form-control {
+.login-main .form-control {
     margin-bottom: 20px;
 }
 
-.join-main label {
+.login-main label {
     display: block;
     margin-bottom: 5px;
 }
 
-.join-main input[type='text'] {
+.login-main input[type='text'] {
     font-size: 16px;
     padding: 5px;
     height: 40px;
     width: 100%;
 }
 
-.join-main select {
+.login-main select {
     font-size: 16px;
     padding: 5px;
     height: 40px;
     width: 100%;
 }
 
-.join-main .btn {
-    margin-top: 20px;
-    width: 100%;
+#btn-sidebar {
+    cursor: pointer;
+    font-size: 24px;
 }
 
 @media (max-width: 700px) {
     .chat-main {
         display: block;
     }
-    .chat-sidebar {
+    #chat-sidebar {
         display: none;
     }
 }
