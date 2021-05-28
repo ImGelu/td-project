@@ -1,9 +1,13 @@
 // Server Side
 
+const db = require("./models");
+
 const express = require("express");
+const cors = require("cors");
 const socket = require("socket.io");
 const http = require("http");
 const path = require("path");
+const mysql = require("mysql2");
 
 const formatMessage = require("./utils/messages");
 const { userJoin, getCurrentUser, userLeave, getRoomUsers } = require("./utils/users");
@@ -12,6 +16,29 @@ const app = express();
 const port = process.env.PORT || 8000;
 const server = http.createServer(app);
 const io = socket(server);
+
+require("./routes/user.routes")(app);
+
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+db.sequelize.sync();
+
+const connection = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "chat",
+});
+
+app.get("/test", (req, res) => {
+  connection.query("SELECT * FROM users", (err, rows) => {
+    if (err) throw err;
+
+    res.send(rows);
+  });
+});
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -55,6 +82,15 @@ io.on("connection", (socket) => {
       io.to(user.room).emit("message", formatMessage("Bot", `<strong>${user.username}</strong> has left the room!`));
     }
   });
+});
+
+// Open the connection to the database
+connection.connect((err) => {
+  if (err) {
+    console.log(err);
+    return;
+  }
+  console.log("Connection established");
 });
 
 // Checking if the Server is running correctly
