@@ -101,3 +101,15 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+exports.login = (req, res) => {
+  User.findOne({ where: { username: req.body.username, password: req.body.password } })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving tutorials.",
+      });
+    });
+};

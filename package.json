@@ -1,33 +1,65 @@
 {
   "name": "chat-app",
-  "version": "1.0.0",
-  "description": "A messenger (chat) web-application using websockets made for the Data Transmission laboratory",
-  "main": "app.js",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "start": "node app",
-    "dev": "nodemon app"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "dev": "nodemon app",
+    "start": "node app"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ImGelu/td-project.git"
-  },
-  "author": "Muntean Tiberiu, Szenasi Peter, Tugui Vlad, Ungur Gelu",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ImGelu/td-project/issues"
-  },
-  "homepage": "https://github.com/ImGelu/td-project#readme",
   "dependencies": {
+    "@popperjs/core": "^2.9.2",
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
+    "bootstrap": "^5.0.1",
+    "core-js": "^3.13.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "jquery": "^3.6.0",
     "moment": "^2.29.1",
-    "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
+    "popper.js": "^1.16.1",
+    "qs": "^6.10.1",
     "sequelize": "^6.6.2",
-    "socket.io": "^4.0.1"
+    "socket.io": "^4.1.2",
+    "socket.io-client": "^4.1.2",
+    "vue": "^2.6.12",
+    "vue-router": "^3.5.1",
+    "vue-socket.io": "^3.0.10",
+    "vue-socket.io-extended": "^4.2.0",
+    "vuex": "^3.6.2",
+    "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
-  }
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "nodemon": "^2.0.7",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }

@@ -1,27 +1,38 @@
 // Server Side
 
+const formatMessage = require("./utils/messages");
+const { userJoin, getCurrentUser, userLeave, getRoomUsers } = require("./utils/users");
 const db = require("./models");
 
 const express = require("express");
 const cors = require("cors");
-const socket = require("socket.io");
-const http = require("http");
 const path = require("path");
 const mysql = require("mysql2");
 
-const formatMessage = require("./utils/messages");
-const { userJoin, getCurrentUser, userLeave, getRoomUsers } = require("./utils/users");
+var app = require("express")();
+var socket = require("socket.io");
 
-const app = express();
 const port = process.env.PORT || 8000;
-const server = http.createServer(app);
-const io = socket(server);
 
-require("./routes/user.routes")(app);
+var server = app.listen(port, () => {
+  console.log(`Server running on port ${port}!`);
+});
 
-app.use(cors());
+let io = socket(server, {
+  cors: {
+    origin: "*",
+  },
+});
+
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+require("./routes/user.routes")(app);
 
 db.sequelize.sync();
 
@@ -32,20 +43,12 @@ const connection = mysql.createConnection({
   database: "chat",
 });
 
-app.get("/test", (req, res) => {
-  connection.query("SELECT * FROM users", (err, rows) => {
-    if (err) throw err;
-
-    res.send(rows);
-  });
-});
-
 app.use(express.static(path.join(__dirname, "public")));
 
 // Detects a signal from the Client when a new socket connection has been made
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
   // Detects a signal from the Client when a new user has joined the room
-  socket.on("joinRoom", ({ username, room }) => {
+  socket.on("joinRoom", async ({ username, room }) => {
     const user = userJoin(socket.id, username, room);
     socket.join(user.room);
 
@@ -76,7 +79,7 @@ io.on("connection", (socket) => {
 
     if (user) {
       // Sends a signal to the Client to handle the departure of the user
-      io.to(user.room).emit("userLeave");
+      io.to(user.room).emit("userLeave", user);
 
       // Sends a signal to the Client to send a message to everyone in the room
       io.to(user.room).emit("message", formatMessage("Bot", `<strong>${user.username}</strong> has left the room!`));
@@ -91,9 +94,4 @@ connection.connect((err) => {
     return;
   }
   console.log("Connection established");
-});
-
-// Checking if the Server is running correctly
-server.listen(port, () => {
-  console.log(`Server running on port ${port}!`);
 });
