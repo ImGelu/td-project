@@ -2,7 +2,7 @@
 :root {
     --dark-color-a: #23272a;
     --dark-color-b: #2c2f33;
-    --light-color: #e6e9ff;
+    --light-color: #F0F8FF;
     --success-color: #5cb85c;
     --error-color: #d9534f;
 }
@@ -16,7 +16,8 @@
 body {
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
-    background: var(--light-color);
+    background: rgb(137, 207, 240);
+    background: radial-gradient(circle, rgba(137, 207, 240, 1) 0%, rgba(0, 191, 255, 1) 100%);
     height: 100%;
     margin: 0px;
     padding: 0px;
@@ -103,6 +104,7 @@ p, h3 {
     margin-bottom: 15px;
     background-color: var(--light-color);
     border-radius: 5px;
+    border: 1px solid #7CB9E8;
 }
 
 .chat-messages .message .meta {

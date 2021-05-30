@@ -120,8 +120,10 @@ export default {
     setActiveUser(user, index) {
       this.error = "";
       this.success = "";
+      this.editEnabled = false;
       this.currentUser = user;
       this.currentIndex = user ? index : -1;
+      this.currentUser.password = "";
     },
 
     updateUser() {
@@ -168,7 +170,6 @@ export default {
     },
     edit() {
       if (!this.editEnabled) {
-        this.currentUser.password = "";
         this.passwordConfirmation = "";
         this.editEnabled = true;
       } else {
