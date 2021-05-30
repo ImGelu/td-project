@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 exports.create = (req, res) => {
   if (!req.body.username) {
     res.status(400).send({
-      message: "Nope",
+      message: `Eroare interna`,
     });
 
     return;
@@ -15,6 +15,7 @@ exports.create = (req, res) => {
     email: req.body.email,
     username: req.body.username,
     password: req.body.password,
+    role: 0,
   };
 
   User.create(newUser)
@@ -23,19 +24,7 @@ exports.create = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Internal error",
-      });
-    });
-};
-
-exports.findAll = (req, res) => {
-  User.findAll()
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Internal error",
+        message: `Eroare interna`,
       });
     });
 };
@@ -49,13 +38,13 @@ exports.findOne = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Internal error for id=" + id,
+        message: `Eroare interna`,
       });
     });
 };
 
 exports.update = (req, res) => {
-  const id = req.params.id;
+  const id = req.body.id;
 
   User.update(req.body, {
     where: { id: id },
@@ -63,17 +52,17 @@ exports.update = (req, res) => {
     .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Tutorial was updated successfully.",
+          message: "Datele au fost actualizate cu succes",
         });
       } else {
         res.send({
-          message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`,
+          message: `Eroare interna`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error updating Tutorial with id=" + id,
+        message: `Eroare interna`,
       });
     });
 };
@@ -87,17 +76,17 @@ exports.delete = (req, res) => {
     .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Tutorial was deleted successfully!",
+          message: "Utilizatorul a fost sters cu succes!",
         });
       } else {
         res.send({
-          message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`,
+          message: `Eroare interna`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Could not delete Tutorial with id=" + id,
+        message: `Eroare interna`,
       });
     });
 };
@@ -109,7 +98,22 @@ exports.login = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while retrieving tutorials.",
+        message: `Eroare interna`,
+      });
+    });
+};
+
+exports.findAll = (req, res) => {
+  const name = req.query.username;
+  var condition = name ? { username: { [Op.like]: `%${name}%` } } : null;
+
+  User.findAll({ where: condition })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: `Eroare interna`,
       });
     });
 };

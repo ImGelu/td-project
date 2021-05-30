@@ -1,13 +1,22 @@
 <template>
   <div class="chat-container">
     <header class="chat-header">
-      <i id="btn-sidebar" class="fas fa-barss"></i>
+      <div class="btn-group">
+        <button class="btn btn-success btn-sm" type="button">
+          Conectat ca <strong>{{ $store.state.user.username }}</strong>
+        </button>
+        <button type="button" class="btn btn-sm btn-success" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="goToSettings">
+          <i class="fa fa-cogs"></i>
+        </button>
+      </div>
       <h3 id="room-name">{{ roomName }}</h3>
       <button class="btn btn-secondary" @click="logOut">Deconectează-te</button>
     </header>
     <main class="chat-main">
       <div id="chat-sidebar" class="chat-sidebar">
-        <h3><i class="fas fa-users"></i> Utilizatori</h3>
+        <h3>
+          <i class="fas fa-users"></i> Utilizatori <a class="btn btn-sm btn-secondary" href="/users" v-if="$store.state.user.role == 1"><i class="fas fa-pen"></i></a>
+        </h3>
         <ul id="room-users">
           <li v-for="user in users" :key="user.id">
             {{ user.username }}
@@ -20,7 +29,7 @@
       <div id="chat-form" class="input-group">
         <button id="btn-location" class="btn btn-success" type="button" style="border-radius: 0.25rem 0 0 0.25rem" data-toggle="tooltip" @click="sendLocation" data-placement="top" title="Send Location"><i class="fas fa-map"></i></button>
 
-        <input type="text" id="msg" class="form-control" placeholder="Type a message..." aria-label="Type a message..." v-model="message" required autocomplete="off" />
+        <input type="text" id="msg" class="form-control" placeholder="Scrie un mesaj..." aria-label="Scrie un mesaj..." v-model="message" required autocomplete="off" />
         <button @click="sendMessage" class="btn btn-primary" id="ssendBtn" style="border-radius: 0 0.25rem 0.25rem 0"><i class="fas fa-paper-plane"></i> Trimite</button>
       </div>
     </div>
@@ -33,7 +42,7 @@ export default {
 
   created() {
     if (this.$store.state.user != "") {
-      this.$socket.client.emit("joinRoom", { username: this.$store.state.user.username, room: this.$store.state.user.room });
+      this.$socket.client.emit("joinRoom", { username: this.$store.state.user.username, room: this.$store.state.user.room, role: this.$store.state.user.role });
     } else {
       window.location = "/login";
     }
@@ -82,8 +91,22 @@ export default {
 
       this.$socket.client.emit("chatMessage", `<iframe width="800" height="200" style="border:0" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD7dvlUSM71t5nhC9-RdxB4dvKX6_gCXh8&q=${this.lat}, ${this.long}"></iframe>`);
     },
+    goToSettings() {
+      this.$socket.client.disconnect();
+      this.$router.push("/settings");
+    },
   },
 };
 </script>
 
-<style></style>
+<style>
+.badge-primary {
+  color: #fff !important;
+  background-color: #007bff;
+}
+
+.badge-danger {
+  color: #fff !important;
+  background-color: #dc3545;
+}
+</style>

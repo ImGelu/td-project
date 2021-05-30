@@ -55,7 +55,12 @@ socket.on("message", (message) => {
 function outputMessage(message) {
   const div = document.createElement("div");
   div.classList.add("message");
-  div.innerHTML = `<p class="meta">${message.username} <span class="float-right">${message.time}</span></p><p class="text">${message.text}</p>`;
+
+  if (message.role == 0) {
+    div.innerHTML = `<p class="meta">${message.username} <span class="float-right">${message.time}</span></p><p class="text">${message.text}</p>`;
+  } else {
+    div.innerHTML = `<p class="meta">${message.username} <span class='badge badge-danger'>Administrator</span> &bull; <span class="float-right">${message.time}</span></p><p class="text">${message.text}</p>`;
+  }
 
   if (store.state.user.username) {
     document.querySelector(".chat-messages").appendChild(div);

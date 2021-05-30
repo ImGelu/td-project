@@ -4,6 +4,8 @@ import Login from "../components/Login";
 import Register from "../components/Register";
 import Chat from "../components/Chat";
 import Homepage from "../components/Homepage";
+import Users from "../components/Users";
+import Settings from "../components/Settings";
 
 Vue.use(VueRouter);
 
@@ -25,8 +27,18 @@ const routes = [
   },
   {
     path: "/chat",
-    name: "chat",
+    name: "Chat",
     component: Chat,
+  },
+  {
+    path: "/users",
+    name: "Users",
+    component: Users,
+  },
+  {
+    path: "/settings",
+    name: "Settings",
+    component: Settings,
   },
 ];
 
